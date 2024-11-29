@@ -75,4 +75,78 @@ router.get("/add", (req,res) => {
     res.render("add_workout", {title:"Add Workout"});
 })
 
+// Edit workout route
+router.get('/edit/:id', async (req, res) => {
+    try {
+        let id = req.params.id; // fix: remove the unnecessary '-'
+        const user = await User.findById(id);
+
+        if (!user) {
+            // If no user is found, redirect to home
+            return res.redirect('/');
+        }
+
+        res.render("edit", {
+            title: "Edit Workout",
+            user: user,
+        });
+    } catch (err) {
+        // If an error occurs, redirect to home
+        console.error(err);
+        res.redirect('/');
+    }
+});
+
+
+// Update user route
+router.post('/update/:id', upload, async (req, res) => {
+    let id = req.params.id; // Get the id from the route parameter
+
+    try {
+        // Update the user in the database
+        const result = await User.findByIdAndUpdate(id, {
+            Workout: req.body.Workout,
+            Sets: parseInt(req.body.Sets),
+            Reps: parseInt(req.body.Reps),
+            Target: req.body.Target,
+            Weight: parseInt(req.body.Weight),
+        });
+
+        // If the update is successful, set a success message in the session
+        req.session.message = {
+            type: "success",
+            message: "Workout updated!",
+        };
+        res.redirect("/"); // Redirect to the home page or a different page
+    } catch (err) {
+        res.json({ message: err.message, type: 'danger' }); // If there's an error
+    }
+});
+
+
+// Delete workout route
+router.get('/delete/:id', async (req, res) => {
+    let id = req.params.id;
+
+    try {
+        // Use async/await with findByIdAndDelete
+        const result = await User.findByIdAndDelete(id);
+
+        if (!result) {
+            return res.json({ message: 'No workout found with that ID' }); // Handle case where no workout is found
+        }
+
+        req.session.message = {
+            type: 'info',
+            message: 'Workout deleted',
+        };
+        res.redirect("/"); // Redirect to the home page
+    } catch (err) {
+        res.json({ message: err.message }); // If there's an error
+    }
+});
+
+
+
+
 module.exports = router;

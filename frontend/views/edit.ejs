@@ -1,0 +1,43 @@
+<%- include('layout/header') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 mx-auto mt-4">
+            <div class="card shadow">
+                <div class="card-header bg-success">
+                    <h5 class="text-light">Edit your workout</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form action="/update/<%= user._id %>" method="post" id="add-form" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="name">Workout</label>
+                            <input type="text" name="Workout" class="form-control form-control-lg" placeholder="Enter workout name" value="<%= user.Workout %>" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sets">Sets</label>
+                            <input type="number" name="Sets" class="form-control form-control-lg" placeholder="Enter number of sets" value="<%= user.Sets %>" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reps">Reps</label>
+                            <input type="number" name="Reps" class="form-control form-control-lg" placeholder="Enter number of reps" value="<%= user.Reps %>" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="target">Targeted Muscle</label>
+                            <input type="text" name="Target" class="form-control form-control-lg" placeholder="Enter the muscle(s) worked" value="<%= user.Target %>"required/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="weight">Weight</label>
+                            <input type="text" name="Weight" class="form-control form-control-lg" placeholder="Enter the weight used" value="<%= user.Weight %>" required/>
+                        </div>
+                       
+                        <div class="mb-3">
+                            <input type="submit" name="submit" value="Update User" class="btn btn-success btn-lg" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('layout/footer')  %>
