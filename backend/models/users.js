@@ -16,8 +16,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    'prog-pic': {
-        type: String,
+    Weight: {
+        type: Number,
         required: false,
     }
 });

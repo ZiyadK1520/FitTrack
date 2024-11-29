@@ -16,8 +16,8 @@
                     <thead>
                         <tr class="table-dark">
                             <th>ID</th>
-                            <th>Image</th>
                             <th>Workout</th>
+                            <th>Weight</th>
                             <th>Sets</th>
                             <th>Reps</th>
                             <th>Target</th>
@@ -28,8 +28,8 @@
                         <% users.forEach((row, index) => { %>
                             <tr class="align-middle">
                                 <td><%= index + 1 %></td>
-                                <td><img src="<%= row.image %>" width="50" class="img-thumbnail" /></td>
                                 <td><%= row.Workout %></td>
+                                <td><%= row.Weight %></td>
                                 <td><%= row.Sets %></td>
                                 <td><%= row.Reps %></td>
                                 <td><%= row.Target %></td>

@@ -31,7 +31,7 @@ router.post('/add', upload, async (req, res) => {
             Sets: parseInt(req.body.Sets),
             Reps: parseInt(req.body.Reps),
             Target: req.body.Target,
-            'prog-pic': req.file ? req.file.filename: "",
+            Weight: parseInt(req.body.Weight),
         });
 
         // Save the user to the database
