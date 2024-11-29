@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/users');
 const multer = require('multer');
+const bcrypt = require('bcrypt')
+
+const users = []
+
+
 
 //image upload
 var storage = multer.diskStorage({
@@ -65,6 +70,42 @@ router.get("/", async (req, res) => {
         res.json({ message: err.message });
     }
 });
+
+//Route to the signup page
+router.get("/signup", (req, res) => {
+    res.render('signup', {title:"Sign Up"})
+})
+
+// Route to the login page
+router.get("/login", (req, res) => {
+    res.render('login', {
+        title: 'Login Page', // Add the title here
+        messages: req.session.messages || {} // Keep your messages logic
+    });
+});
+
+//Route to get to about page
+router.get("/about",(req,res)=>{
+    res.render('about',{title: "About Page"} )
+})
+
+
+//some post bs
+router.post('signup', async (req,res) => {
+    try{
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        users.push({
+            id: Date.now().toString(),
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword
+        })
+        res.redirect('/login')
+    } catch {
+        res.redirect('/signup')
+    }
+    console.log(users)
+})
 
 //Route to display the main page, may change later
 router.get("/",(req,res) => {

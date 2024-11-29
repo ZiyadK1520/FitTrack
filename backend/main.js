@@ -39,8 +39,9 @@ app.set("views", path.join(__dirname, "../frontend", "views"));
 //set template engine
 app.set("view engine","ejs");
 
-app.use(express.json())
-;
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: false }))
 
 // route prefix
 app.use("",require("../backend/routes/routes"));
