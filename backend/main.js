@@ -31,6 +31,8 @@ app.use((req,res, next) => {
 
 })
 
+app.use(express.static("uploads"));
+
 //set the location of the views file
 app.set("views", path.join(__dirname, "../frontend", "views"));
 
