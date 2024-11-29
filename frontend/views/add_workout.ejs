@@ -11,19 +11,23 @@
                     <form action="/add" method="post" id="add-form" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="name">Workout</label>
-                            <input type="text" name="workout" class="form-control form-control-lg" placeholder="Enter workout name" required/>
+                            <input type="text" name="Workout" class="form-control form-control-lg" placeholder="Enter workout name" required/>
                         </div>
                         <div class="mb-3">
                             <label for="sets">Sets</label>
-                            <input type="number" name="sets" class="form-control form-control-lg" placeholder="Enter number of sets" required/>
+                            <input type="number" name="Sets" class="form-control form-control-lg" placeholder="Enter number of sets" required/>
                         </div>
                         <div class="mb-3">
                             <label for="reps">Reps</label>
-                            <input type="number" name="reps" class="form-control form-control-lg" placeholder="Enter number of reps" required/>
+                            <input type="number" name="Reps" class="form-control form-control-lg" placeholder="Enter number of reps" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="target">Targeted Muscle</label>
+                            <input type="text" name="Target" class="form-control form-control-lg" placeholder="Enter the muscle(s) worked" required/>
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Progress Image</label>
-                            <input type="file" name="image" class="form-control form-control-lg" required/>
+                            <input type="file" name="image" class="form-control form-control-lg" optional/>
                         </div>
                         <div class="mb-3">
                             <input type="submit" name="submit" value="Add User" class="btn btn-primary btn-lg" />

@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
     Target: {
         type: String,
         required: true,
+    },
+    'prog-pic': {
+        type: String,
+        required: false,
     }
-})
+});
 module.exports = mongoose.model("User", userSchema);
