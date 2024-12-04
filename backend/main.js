@@ -24,6 +24,9 @@ app.use(session({
 })
 );
 
+//Serve static files form the assets folder
+app.use('/Assets', express.static(path.join(__dirname, 'Assets')));
+
 app.use((req,res, next) => {
     res.locals.message = req.session.message;
     delete req.session.message;

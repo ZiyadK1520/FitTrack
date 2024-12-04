@@ -187,6 +187,10 @@ router.get('/delete/:id', async (req, res) => {
     }
 });
 
+//javascript for button function
+function goHome() {
+    window.location.href = '/';
+}
 
 
 
