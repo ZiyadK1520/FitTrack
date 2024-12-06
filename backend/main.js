@@ -6,6 +6,9 @@ const session = require('express-session');
 const path = require('path'); //imports path module, without this we cannot locate views file
 const passport = require('passport');
 const flash = require('connect-flash');
+// const routes = require('../backend/routes/routes');
+const route = require('./routes/routes');
+
 
 const app = express();
 const PORT = process.env.PORT || 4000;
