@@ -172,95 +172,75 @@ router.get("/add", (req,res) => {
 })
 
 // Edit workout route
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
     try {
-        let id = req.params.id; // fix: remove the unnecessary '-'
-        const user = await User.findById(id);
-
-        if (!user) {
-            // If no user is found, redirect to home
-            return res.redirect('/');
+        const workout = await Workout.findOne({ _id: req.params.id, userId: req.user._id });
+        if (!workout) {
+            req.flash('error', 'Workout not found or unauthorized access');
+            return res.redirect('/user_dashboard');
         }
-
-        res.render("edit", {
-            title: "Edit Workout",
-            user: user,
-        });
+        res.render('edit', { title: 'Edit Workout', workout });
     } catch (err) {
-        // If an error occurs, redirect to home
         console.error(err);
-        res.redirect('/');
+        req.flash('error', 'An error occurred');
+        res.redirect('/user_dashboard');
     }
 });
 
-// Edit workout route
-router.get('/edit/:id', async (req, res) => {
-    try {
-        let id = req.params.id; // fix: remove the unnecessary '-'
-        const user = await User.findById(id);
 
-        if (!user) {
-            // If no user is found, redirect to home
-            return res.redirect('/');
-        }
-
-        res.render("edit", {
-            title: "Edit Workout",
-            user: user,
-        });
-    } catch (err) {
-        // If an error occurs, redirect to home
-        console.error(err);
-        res.redirect('/');
-    }
-});
 
 // Update workout route
-router.post('/update/:id', upload, async (req, res) => {
-    let id = req.params.id; // Get the id from the route parameter
-
+router.post('/update/:id', ensureAuthenticated, async (req, res) => {
     try {
-        // Update the workout in the database
-        const result = await User.findByIdAndUpdate(id, {
-            Workout: req.body.Workout,
-            Sets: parseInt(req.body.Sets),
-            Reps: parseInt(req.body.Reps),
-            Target: req.body.Target,
-            Weight: parseInt(req.body.Weight),
-        });
+        const updatedWorkout = await Workout.findOneAndUpdate(
+            { _id: req.params.id, userId: req.user._id },
+            {
+                Workout: req.body.Workout,
+                Sets: parseInt(req.body.Sets),
+                Reps: parseInt(req.body.Reps),
+                Target: req.body.Target,
+                Weight: parseInt(req.body.Weight),
+            },
+            { new: true }
+        );
 
-        // If the update is successful, set a success message in the session
-        req.session.message = {
-            type: "success",
-            message: "Workout updated!",
-        };
-        res.redirect("/"); // Redirect to the home page or a different page
+        if (!updatedWorkout) {
+            req.flash('error', 'Workout not found or unauthorized access');
+            return res.redirect('/user_dashboard');
+        }
+
+        req.flash('success', 'Workout updated successfully!');
+        res.redirect('/user_dashboard');
     } catch (err) {
-        res.json({ message: err.message, type: 'danger' }); // If there's an error
+        console.error(err);
+        req.flash('error', 'An error occurred while updating the workout');
+        res.redirect('/user_dashboard');
     }
 });
+
+
 
 // Delete workout route
 router.get('/delete/:id', async (req, res) => {
     let id = req.params.id;
 
     try {
-        // Use async/await with findByIdAndDelete
-        const result = await User.findByIdAndDelete(id);
+        const result = await Workout.findByIdAndDelete(id); // Delete the workout by ID
 
         if (!result) {
-            return res.json({ message: 'No workout found with that ID' }); // Handle case where no workout is found
+            req.flash('error', 'No workout found with that ID');
+            return res.redirect('/user_dashboard');
         }
 
-        req.session.message = {
-            type: 'info',
-            message: 'Workout deleted',
-        };
-        res.redirect("/"); // Redirect to the home page
+        req.flash('success', 'Workout deleted successfully');
+        res.redirect('/user_dashboard'); // Redirect to dashboard
     } catch (err) {
-        res.json({ message: err.message }); // If there's an error
+        console.error(err);
+        req.flash('error', 'Error deleting workout');
+        res.redirect('/user_dashboard');
     }
 });
+
 
 //javascript for button function
 function goHome() {
