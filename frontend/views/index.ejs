@@ -1,70 +1,22 @@
 <%- include('layout/header') %>
 
-<body class="bg-dark text-light">
-  <div class="container">
-    <div class="row my-4">
-      <div class="col-lg-12">
-        <% if (message) { %>
-          <!-- Alert Message -->
-          <div
-            class="alert alert-dismissible fade show alert-<%= message.type %>"
-            role="alert"
-          >
-            <button
-              class="btn-close"
-              type="button"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-            ></button>
-            <strong><%= message.message %></strong>
-          </div>
-        <% } %>
-
-        <!-- Table Section -->
-        <div class="table-responsive bg-dark rounded-3 p-4 shadow-lg">
-          <% if (users && users.length > 0) { %>
-            <table class="table table-dark table-striped table-hover text-center my-3">
-              <thead>
-                <tr class="table-primary">
-                  <th>ID</th>
-                  <th>Workout</th>
-                  <th>Weight</th>
-                  <th>Sets</th>
-                  <th>Reps</th>
-                  <th>Target</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% users.forEach((row, index) => { %>
-                  <tr class="align-middle">
-                    <td><%= index + 1 %></td>
-                    <td><%= row.Workout %></td>
-                    <td><%= row.Weight %></td>
-                    <td><%= row.Sets %></td>
-                    <td><%= row.Reps %></td>
-                    <td><%= row.Target %></td>
-                    <td>
-                      <a href="/edit/<%= row._id %>" class="text-success">
-                        <i class="fas fa-edit fa-lg mx-1"></i>
-                      </a>
-                      <a href="/delete/<%= row._id %>" class="text-danger">
-                        <i class="fas fa-trash fa-lg mx-1"></i>
-                      </a>
-                    </td>
-                  </tr>
-                <% }); %>
-              </tbody>
-            </table>
-          <% } else { %>
-            <!-- No Workouts Placeholder -->
-            <h1 class="text-center text-secondary mt-5">No workouts added!</h1>
-          <% } %>
-        </div>
-      </div>
+<div class="container mt-5">
+  <div class="row">
+    <!-- Left Section -->
+    <div class="col-md-6 text-center d-flex flex-column justify-content-center">
+      <h1 class="mb-4">Welcome to FitTrack</h1>
+      <p class="mb-4">Start tracking your progress today!</p>
+      <a href="/signup" class="btn btn-primary btn-lg">Get Started Today!</a>
+    </div>
+    <!-- Right Section -->
+    <div class="col-md-6 text-center d-flex flex-column justify-content-center bg-dark p-4 rounded">
+      <h2 class="mb-4">Already have an account?</h2>
+      <p class="mb-4">Login to access your workouts.</p>
+      <a href="/login" class="btn btn-secondary btn-lg">Login</a>
     </div>
   </div>
-</body>
+</div>
 
 <%- include('layout/footer') %>
+
 

@@ -1,24 +1,14 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
 const userSchema = new mongoose.Schema({
-    Workout: {
-        type: String,
-        required: true,
-    },
-    Sets: {
-        type: Number,
-        required: true,
-    },
-    Reps: {
-        type: Number,
-        required: true,
-    },
-    Target: {
-        type: String,
-        required: true,
-    },
-    Weight: {
-        type: Number,
-        required: false,
-    }
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
 });
-module.exports = mongoose.model("User", userSchema);
+
+userSchema.methods.comparePassword = function (candidatePassword) {
+    return bcrypt.compare(candidatePassword, this.password);
+};
+
+module.exports = mongoose.model('User', userSchema);
